@@ -47,6 +47,22 @@ var PlayerBat = Rectangle.extend({
 		this.w = BAT_WIDTH;
 		this.h = BAT_HEIGHT;
 		this.color = "#000";
+	},
+	motionToLeft: function(on) {
+		if (on && this.x > 0) {
+			this.isMovingLeft = true;
+			this.x -= 5;
+		} else {
+			this.isMovingLeft = false;
+		}
+	},
+	motionToRight: function(on) {
+		if (on && this.x < (GAME_WIDTH - BAT_WIDTH)) {
+			this.isMovingRight = true;
+			this.x += 5;
+		} else {
+			this.isMovingRight = false;
+		}
 	}
 });
 
@@ -57,6 +73,8 @@ var Block = Rectangle.extend({
 		this.w = BLOCK_WIDTH;
 		this.h = BLOCK_HEIGHT;
 		this.color = "#FFF";
+		this.isMovingLeft = false;
+		this.isMovingRight = false;
 	}
 });
 
@@ -97,6 +115,16 @@ var GameBall = GameObject.extend({
 			if (this.detectObjectCollision(blocks[i])) {
 				blocks[i].alive = false;
 				blockCounter--;
+			}
+		}
+	},
+	detectBatCollision: function(bat) {
+		if (this.detectObjectCollision(bat) ) {
+			if (bat.isMovingLeft) {
+				this.ax--;
+			}
+			if (bat.isMovingRight) {
+				this.ax++;
 			}
 		}
 	},
