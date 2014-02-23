@@ -1,5 +1,5 @@
 /**
- * System values
+ * System values used in the game
  */
 
 var GAME_WIDTH = 600;
