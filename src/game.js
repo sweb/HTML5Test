@@ -43,14 +43,11 @@ function update() {
 
 	context.fillStyle = "#AAA";
 	context.fillRect(0, 0, canvas.width, canvas.height);
+	var tryToMoveLeft = keyState[37];
+	var tryToMoveRight = keyState[39];
 	
-	if (keyState[37] && bat.x > 0) {
-		bat.x -= 5;
-	}
-	
-	if (keyState[39] && bat.x < (GAME_WIDTH - BAT_WIDTH)) {
-		bat.x += 5;
-	}
+	bat.motionToLeft(tryToMoveLeft);
+	bat.motionToRight(tryToMoveRight);
 	
 	if (keyState[38] && !isRunning) {
 		ball.release();
@@ -69,7 +66,7 @@ function update() {
 
 	bat.draw(context);
 	ball.draw(context);
-	ball.detectObjectCollision(bat);
+	ball.detectBatCollision(bat);
 	ball.detectBlockCollision(blocks);
 	for (var i = 0; i < blocks.length; i++) {
 		blocks[i].draw(context);
