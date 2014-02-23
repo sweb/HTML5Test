@@ -4,6 +4,9 @@
 
 var GAME_WIDTH = 600;
 var GAME_HEIGHT = 400;
+
+var MENU_WIDTH = 150;
+
 var TIME_PER_FRAME = 16;
 var GAME_FONTS = "bold 20px sans-serif";
 
