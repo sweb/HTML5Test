@@ -124,7 +124,6 @@ var GameBall = GameObject.extend({
 		this._super(0, 0);
 		this.reset();
 		this.radius = GAME_BALL_RADIUS;
-		this.isBomb = false;
 	},
 	move: function() {
 		if ( this.x >= (GAME_WIDTH - this.radius) || this.x <= this.radius ) {
@@ -136,7 +135,7 @@ var GameBall = GameObject.extend({
 		}
 		
 		if ( this.y >= ( GAME_HEIGHT - this.radius ) ) {
-			if (this.isBomb) {
+			if (this.isBomb()) {
 				this.ay *= -1;
 			} else {
 				this.reset();
@@ -167,7 +166,7 @@ var GameBall = GameObject.extend({
 	},
 	detectBatCollision: function(bat) {
 		if (this.detectObjectCollision(bat) ) {
-			if (this.isBomb) {
+			if (this.isBomb()) {
 				this.reset();
 				isRunning = false;
 				menu.loseLife();
@@ -186,7 +185,8 @@ var GameBall = GameObject.extend({
 		this.y = BALL_START_POSITION_Y;
 		this.ax = 0;
 		this.ay = 0;
-		this.isBomb = false;
+		this.bombTimer = 0;
+		this.color = "white";
 	},
 	release: function() {
 		this.ax = 2;
@@ -194,13 +194,27 @@ var GameBall = GameObject.extend({
 	},
 	draw: function(context) {
 		if (this.alive) {
+			if (this.isBomb()) {
+				this.bombTimer--;
+			} else {
+				this.color = "white";
+			}
 			this.move();
 			context.strokeStyle = "black";
-			context.fillStyle = "white";
+			context.fillStyle = this.color;
 			context.beginPath();
 			context.arc( this.x, this.y, this.radius, 0, 2*Math.PI);
 			context.stroke();
 			context.fill();
 		}
+	},
+	startBombMode: function() {
+		if (!this.isBomb()) {
+			this.color = "red";
+			this.bombTimer = 10000;
+		}
+	},
+	isBomb: function() {
+		this.bombTimer > 0;
 	}
 });
