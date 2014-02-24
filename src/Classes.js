@@ -124,6 +124,7 @@ var GameBall = GameObject.extend({
 		this._super(0, 0);
 		this.reset();
 		this.radius = GAME_BALL_RADIUS;
+		this.isBomb = false;
 	},
 	move: function() {
 		if ( this.x >= (GAME_WIDTH - this.radius) || this.x <= this.radius ) {
@@ -134,10 +135,14 @@ var GameBall = GameObject.extend({
 			this.ay *= -1;
 		}
 		
-		if ( this.y >= ( GAME_HEIGHT - this.radius )) {
-			this.reset();
-			isRunning = false;
-			menu.loseLife();
+		if ( this.y >= ( GAME_HEIGHT - this.radius ) ) {
+			if (this.isBomb) {
+				this.ay *= -1;
+			} else {
+				this.reset();
+				isRunning = false;
+				menu.loseLife();
+			}
 		}
 		
 		this.x += this.ax;
@@ -162,11 +167,17 @@ var GameBall = GameObject.extend({
 	},
 	detectBatCollision: function(bat) {
 		if (this.detectObjectCollision(bat) ) {
-			if (bat.isMovingLeft) {
-				this.ax--;
-			}
-			if (bat.isMovingRight) {
-				this.ax++;
+			if (this.isBomb) {
+				this.reset();
+				isRunning = false;
+				menu.loseLife();
+			} else {
+				if (bat.isMovingLeft) {
+					this.ax--;
+				}
+				if (bat.isMovingRight) {
+					this.ax++;
+				}
 			}
 		}
 	},
@@ -175,6 +186,7 @@ var GameBall = GameObject.extend({
 		this.y = BALL_START_POSITION_Y;
 		this.ax = 0;
 		this.ay = 0;
+		this.isBomb = false;
 	},
 	release: function() {
 		this.ax = 2;
