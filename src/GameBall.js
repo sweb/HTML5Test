@@ -43,7 +43,7 @@ var GameBall = GameObject.extend({
 				blocks[i].alive = false;
 				blockCounter--;
 				menu.increaseScore();
-				if (Math.random() < 0.1) {
+				if (Math.random() < 0.05) {
 					this.startBombMode();
 				}
 			}
@@ -78,13 +78,22 @@ var GameBall = GameObject.extend({
 		this.ay = -4;
 	},
 	draw: function(context) {
+		this.displayBall = true;
 		if (this.alive) {
 			if (this.isBomb()) {
+				if (this.bombTimer < 30 && this.bombTimer % 4 == 0) {
+					this.displayBall = false;
+				}
 				this.bombTimer--;
 			} else {
 				this.color = "white";
 			}
 			this.move();
+			this.drawHelper(context, this.displayBall);
+		}
+	},
+	drawHelper: function(context, bool) {
+		if (bool) {
 			context.strokeStyle = "black";
 			context.fillStyle = this.color;
 			context.beginPath();
