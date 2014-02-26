@@ -43,6 +43,9 @@ var GameBall = GameObject.extend({
 				blocks[i].alive = false;
 				blockCounter--;
 				menu.increaseScore();
+				if (Math.random() < 0.1) {
+					this.startBombMode();
+				}
 			}
 		}
 	},
@@ -93,7 +96,7 @@ var GameBall = GameObject.extend({
 	startBombMode: function() {
 		if (!this.isBomb()) {
 			this.color = "red";
-			this.bombTimer = 10000;
+			this.bombTimer = 500;
 		}
 	}
 });
