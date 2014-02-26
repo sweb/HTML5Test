@@ -122,8 +122,12 @@ var Block = Rectangle.extend({
 var GameBall = GameObject.extend({
 	init: function() {
 		this._super(0, 0);
+		this.bombTimer = 0;
 		this.reset();
 		this.radius = GAME_BALL_RADIUS;
+	},
+	isBomb: function() {
+		return this.bombTimer > 0;
 	},
 	move: function() {
 		if ( this.x >= (GAME_WIDTH - this.radius) || this.x <= this.radius ) {
@@ -213,8 +217,5 @@ var GameBall = GameObject.extend({
 			this.color = "red";
 			this.bombTimer = 10000;
 		}
-	},
-	isBomb: function() {
-		this.bombTimer > 0;
 	}
 });
