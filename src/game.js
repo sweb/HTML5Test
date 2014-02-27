@@ -36,7 +36,6 @@ function update() {
 	var tryToMoveLeft = keyState[37];
 	var tryToMoveRight = keyState[39];
 	var isTryingToReset = keyState[82];
-	var isTryingToCreateBomb = keyState[66];
 	
 	bat.motionToLeft(tryToMoveLeft);
 	bat.motionToRight(tryToMoveRight);
@@ -44,10 +43,6 @@ function update() {
 	if (keyState[38] && !isRunning) {
 		ball.release();
 		isRunning = true;
-	}
-
-	if (keyState[66] && isRunning && isTryingToCreateBomb && !ball.isBomb()){
-		ball.startBombMode();
 	}
 	
 	if (!isGameOver && blockCounter == 0) {

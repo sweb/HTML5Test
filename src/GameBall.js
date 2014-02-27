@@ -57,10 +57,10 @@ var GameBall = GameObject.extend({
 				menu.loseLife();
 			} else {
 				if (bat.isMovingLeft) {
-					this.ax--;
+					this.ax++;
 				}
 				if (bat.isMovingRight) {
-					this.ax++;
+					this.ax--;
 				}
 			}
 		}
@@ -81,7 +81,7 @@ var GameBall = GameObject.extend({
 		this.displayBall = true;
 		if (this.alive) {
 			if (this.isBomb()) {
-				if (this.bombTimer < 30 && this.bombTimer % 4 == 0) {
+				if (this.bombTimer < END_OF_BOMB_WARN_TIME && this.bombTimer % FLICKER_REPETITION < FLICKER_REPETITION/2) {
 					this.displayBall = false;
 				}
 				this.bombTimer--;
@@ -105,7 +105,7 @@ var GameBall = GameObject.extend({
 	startBombMode: function() {
 		if (!this.isBomb()) {
 			this.color = "red";
-			this.bombTimer = 500;
+			this.bombTimer = BOMB_MODE_TIME;
 		}
 	}
 });
