@@ -43,7 +43,7 @@ var GameBall = GameObject.extend({
 				blocks[i].alive = false;
 				blockCounter--;
 				menu.increaseScore();
-				if (Math.random() < 0.05) {
+				if (Math.random() < BOMB_MODE_CHANCE) {
 					this.startBombMode();
 				}
 			}
@@ -57,10 +57,10 @@ var GameBall = GameObject.extend({
 				menu.loseLife();
 			} else {
 				if (bat.isMovingLeft) {
-					this.ax--;
+					this.ax += ACCELERATION_BY_BAT;
 				}
 				if (bat.isMovingRight) {
-					this.ax++;
+					this.ax-= ACCELERATION_BY_BAT;
 				}
 			}
 		}
@@ -74,14 +74,14 @@ var GameBall = GameObject.extend({
 		this.color = "white";
 	},
 	release: function() {
-		this.ax = 2;
-		this.ay = -4;
+		this.ax = INIT_BALL_AX;
+		this.ay = INIT_BALL_AY;
 	},
 	draw: function(context) {
 		this.displayBall = true;
 		if (this.alive) {
 			if (this.isBomb()) {
-				if (this.bombTimer < 30 && this.bombTimer % 4 == 0) {
+				if (this.bombTimer < END_OF_BOMB_WARN_TIME && this.bombTimer % FLICKER_REPETITION < FLICKER_REPETITION/2) {
 					this.displayBall = false;
 				}
 				this.bombTimer--;
@@ -105,7 +105,7 @@ var GameBall = GameObject.extend({
 	startBombMode: function() {
 		if (!this.isBomb()) {
 			this.color = "red";
-			this.bombTimer = 500;
+			this.bombTimer = BOMB_MODE_TIME;
 		}
 	}
 });
