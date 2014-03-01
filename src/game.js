@@ -90,7 +90,7 @@ function reset() {
 	blockCounter = 13 * 8;
 	menu = new Menu();
 	bat = new PlayerBat(GAME_WIDTH / 2 - 60, GAME_HEIGHT - 10);
-	ball = new GameBall();
+	ball = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0);
 	blocks = new Array;
 	for (var i = 0; i < 13; i++) {
 		for (var j = 0; j < 8; j++) {
