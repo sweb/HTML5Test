@@ -4,26 +4,9 @@ var BombBall = AbstractBall.extend({
 		this.color = "red";
 		this.bombTimer = BOMB_MODE_TIME;
 	},
-	move: function() {
-		if ( this.x >= (GAME_WIDTH - this.radius) || this.x <= this.radius ) {
-			this.ax *= -1;
-		}
-		if ( this.y <= this.radius) {
-			this.ay *= -1;
-		}
+	bottomScreenBehavior: function() {
 		if ( this.y >= ( GAME_HEIGHT - this.radius ) ) {
 			this.ay *= -1;
-		}
-		this.x += this.ax;
-		this.y += this.ay;
-	},
-	detectBlockCollision: function(blocks) {
-		for (var i = 0; i < blocks.length; i++) {
-			if (this.detectObjectCollision(blocks[i])) {
-				blocks[i].alive = false;
-				blockCounter--;
-				menu.increaseScore();
-			}
 		}
 	},
 	detectBatCollision: function(bat) {

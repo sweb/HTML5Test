@@ -60,5 +60,33 @@ var AbstractBall = GameObject.extend({
 			return true;
 		}
 		return false;
+	},
+	detectBlockCollision: function(blocks) {
+		for (var i = 0; i < blocks.length; i++) {
+			if (this.detectObjectCollision(blocks[i])) {
+				blocks[i].alive = false;
+				blockCounter--;
+				menu.increaseScore();
+				this.individualCollisionLogic();
+			}
+		}
+	},
+	individualCollisionLogic: function() {
+
+	},
+	move: function() {
+		if ( this.x >= (GAME_WIDTH - this.radius) || this.x <= this.radius ) {
+			this.ax *= -1;
+		}
+		if ( this.y <= this.radius) {
+			this.ay *= -1;
+		}
+		this.bottomScreenBehavior();
+		
+		this.x += this.ax;
+		this.y += this.ay;
+	},
+	bottomScreenBehavior: function() {
+
 	}
 });	
