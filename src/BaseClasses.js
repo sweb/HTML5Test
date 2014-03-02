@@ -77,9 +77,19 @@ var AbstractBall = GameObject.extend({
 	move: function() {
 		if ( this.x >= (GAME_WIDTH - this.radius) || this.x <= this.radius ) {
 			this.ax *= -1;
+			diffToLeft = this.x - this.radius;
+			diffToRight = (GAME_WIDTH - this.radius) - this.x;
+			if (diffToLeft < 0) {
+				this.x -= diffToLeft;
+			}
+			if (diffToRight < 0) {
+				this.x += diffToRight;
+			}
 		}
 		if ( this.y <= this.radius) {
 			this.ay *= -1;
+			diffToTop = this.y - this.radius;
+			this.y -= diffToTop;
 		}
 		this.bottomScreenBehavior();
 		
