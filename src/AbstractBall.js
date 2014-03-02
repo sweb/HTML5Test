@@ -5,6 +5,7 @@ var AbstractBall = GameObject.extend({
 		this.ax = ax;
 		this.ay = ay;
 		this.radius = GAME_BALL_RADIUS;
+		this.correctionAlreadyHappened = false;
 	},
 	drawHelper: function(context, isShowing) {
 		if (isShowing && this.alive) {
@@ -20,14 +21,20 @@ var AbstractBall = GameObject.extend({
 		var leftHorizontalRange = (this.x + this.radius);
 		var rightHorizontalRange = (this.x - this.radius);
 		var topVerticalRange = (this.y + this.radius);
-		bottomVerticalRange = (this.y - this.radius);
+		var bottomVerticalRange = (this.y - this.radius);
 
 		if (leftHorizontalRange >= obj.x && rightHorizontalRange <= (obj.x + obj.w) && 
 				topVerticalRange >= obj.y && bottomVerticalRange <= (obj.y + obj.h) && obj.alive) {
-			if (this.ay < 0) {
-				this.y += ((obj.y + obj.h) - bottomVerticalRange) * 2;
+			var yBeforeLastMove = this.y - this.ay;
+			var hasVerticalHitBefore = ((yBeforeLastMove + this.radius) >= obj.y) && ((yBeforeLastMove - this.radius) <= (obj.y + obj.h));
+			if (this.ay < 0 && !this.correctionAlreadyHappened && !hasVerticalHitBefore) {
+				this.y += ((obj.y + obj.h) - bottomVerticalRange) *2;
+				this.ay *= -1;
+			} else if (this.ay > 0 && !this.correctionAlreadyHappened && !hasVerticalHitBefore) {
+				this.y += (obj.y - topVerticalRange) *2;
+				this.ay *= -1;
 			}
-			this.ay *= -1;
+			this.correctionAlreadyHappened = true;
 			return true;
 		}
 		return false;
@@ -66,6 +73,7 @@ var AbstractBall = GameObject.extend({
 		
 		this.x += this.ax;
 		this.y += this.ay;
+		this.correctionAlreadyHappened = false;
 	},
 	bottomScreenBehavior: function() {
 
