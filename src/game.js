@@ -5,11 +5,14 @@
 var canvas = document.getElementById("gameCanvas");
 canvas.width = GAME_WIDTH + MENU_WIDTH;
 canvas.height = GAME_HEIGHT;
+canvas.style.cursor = "none";
 
 var keyState = {};
 
 window.addEventListener("keydown", doKeyDown, true);
 window.addEventListener("keyup", doKeyUp, true);
+window.addEventListener("mousemove", doMouseMove, false);
+window.addEventListener("click", doClick, false);
 
 var context = canvas.getContext("2d");
 
@@ -37,14 +40,6 @@ function update() {
 	var tryToMoveRight = keyState[39];
 	var isTryingToReset = keyState[82];
 	
-	bat.motionToLeft(tryToMoveLeft);
-	bat.motionToRight(tryToMoveRight);
-	
-	if (keyState[38] && !isRunning) {
-		ball.release();
-		isRunning = true;
-	}
-	
 	if (!isGameOver && blockCounter == 0) {
 		stop();
 	}
@@ -67,6 +62,7 @@ function update() {
 	for (var i = 0; i < blocks.length; i++) {
 		blocks[i].draw(context);
 	}
+	batMotion = false;
 }
 //-----------------------------------------------------------------------------
 function doKeyDown(e) {
@@ -98,5 +94,18 @@ function reset() {
 					* (BLOCK_WIDTH + VERTICAL_SPACE_BETWEEN_BLOCKS), 10 + j
 					* (BLOCK_HEIGHT + HORIZONTAL_SPACE_BETWEEN_BLOCKS)));
 		}
+	}
+}
+
+function doMouseMove(e) {
+	// bat.x = e.pageX - BAT_WIDTH/2;
+	mouseXPosition = e.pageX - BAT_WIDTH/2;
+	bat.move(mouseXPosition);
+}
+
+function doClick(e) {
+	if (!isRunning) {
+		ball.release();
+		isRunning = true;
 	}
 }
