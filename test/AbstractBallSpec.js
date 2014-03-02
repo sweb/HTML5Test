@@ -31,4 +31,18 @@ describe("AbstractBall", function() {
     expect(abstractBall.detectObjectCollision(object)).toEqual(true);
     expect(abstractBall.y).toEqual(98 - abstractBall.radius);
   });
+
+  it("should not move into object from left", function() {
+    var object = new MockObject(100, 100, 50, 50);
+    abstractBall = new AbstractBall(95, 110,3,0);
+    expect(abstractBall.detectObjectCollision(object)).toEqual(true);
+    expect(abstractBall.x).toEqual(98 - abstractBall.radius);
+  });
+
+  it("should not move into object from right", function() {
+    var object = new MockObject(100, 100, 50, 50);
+    abstractBall = new AbstractBall(155, 110,-3,0);
+    expect(abstractBall.detectObjectCollision(object)).toEqual(true);
+    expect(abstractBall.x).toEqual(152 + abstractBall.radius);
+  });
 });

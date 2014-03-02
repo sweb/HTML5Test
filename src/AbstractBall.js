@@ -18,21 +18,31 @@ var AbstractBall = GameObject.extend({
 		}
 	},
 	detectObjectCollision: function(obj) {
-		var leftHorizontalRange = (this.x + this.radius);
-		var rightHorizontalRange = (this.x - this.radius);
-		var topVerticalRange = (this.y + this.radius);
-		var bottomVerticalRange = (this.y - this.radius);
+		var leftBorderOfBall = (this.x + this.radius);
+		var rightBorderOfBall = (this.x - this.radius);
+		var topBorderOfBall = (this.y + this.radius);
+		var bottomBorderOfBall = (this.y - this.radius);
 
-		if (leftHorizontalRange >= obj.x && rightHorizontalRange <= (obj.x + obj.w) && 
-				topVerticalRange >= obj.y && bottomVerticalRange <= (obj.y + obj.h) && obj.alive) {
+		if (leftBorderOfBall >= obj.x && rightBorderOfBall <= (obj.x + obj.w) && 
+				topBorderOfBall >= obj.y && bottomBorderOfBall <= (obj.y + obj.h) && obj.alive) {
 			var yBeforeLastMove = this.y - this.ay;
 			var hasVerticalHitBefore = ((yBeforeLastMove + this.radius) >= obj.y) && ((yBeforeLastMove - this.radius) <= (obj.y + obj.h));
+			var xBeforeLastMove = this.x - this.ax;
+			var hasHorizontalHitBefore = ((xBeforeLastMove + this.radius) >= obj.x) && ((xBeforeLastMove - this.radius) <= (obj.x + obj.w) );
 			if (this.ay < 0 && !this.correctionAlreadyHappened && !hasVerticalHitBefore) {
-				this.y += ((obj.y + obj.h) - bottomVerticalRange) *2;
+				this.y += ((obj.y + obj.h) - bottomBorderOfBall) *2;
 				this.ay *= -1;
 			} else if (this.ay > 0 && !this.correctionAlreadyHappened && !hasVerticalHitBefore) {
-				this.y += (obj.y - topVerticalRange) *2;
+				this.y += (obj.y - topBorderOfBall) *2;
 				this.ay *= -1;
+			}
+
+			if (this.ax > 0 && !this.correctionAlreadyHappened && !hasHorizontalHitBefore) {
+				this.x -= (obj.x - leftBorderOfBall) * 2;
+				this.ax *= -1;
+			} else if (this.ax < 0 && !this.correctionAlreadyHappened && !hasHorizontalHitBefore) {
+				this.x -= ((obj.x + obj.w) - rightBorderOfBall) * 2;
+				this.ax *= -1;
 			}
 			this.correctionAlreadyHappened = true;
 			return true;
