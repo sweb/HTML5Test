@@ -17,8 +17,16 @@ var AbstractBall = GameObject.extend({
 		}
 	},
 	detectObjectCollision: function(obj) {
-		if ((this.x + this.radius) >= obj.x && (this.x - this.radius) <= (obj.x + obj.w) && 
-				(this.y + this.radius) >= obj.y && (this.y - this.radius) <= (obj.y + obj.h) && obj.alive) {
+		var leftHorizontalRange = (this.x + this.radius);
+		var rightHorizontalRange = (this.x - this.radius);
+		var topVerticalRange = (this.y + this.radius);
+		bottomVerticalRange = (this.y - this.radius);
+
+		if (leftHorizontalRange >= obj.x && rightHorizontalRange <= (obj.x + obj.w) && 
+				topVerticalRange >= obj.y && bottomVerticalRange <= (obj.y + obj.h) && obj.alive) {
+			if (this.ay < 0) {
+				this.y += ((obj.y + obj.h) - bottomVerticalRange) * 2;
+			}
 			this.ay *= -1;
 			return true;
 		}
@@ -43,16 +51,16 @@ var AbstractBall = GameObject.extend({
 			diffToLeft = this.x - this.radius;
 			diffToRight = (GAME_WIDTH - this.radius) - this.x;
 			if (diffToLeft < 0) {
-				this.x -= diffToLeft;
+				this.x -= diffToLeft * 2;
 			}
 			if (diffToRight < 0) {
-				this.x += diffToRight;
+				this.x += diffToRight * 2;
 			}
 		}
 		if ( this.y <= this.radius) {
 			this.ay *= -1;
 			diffToTop = this.y - this.radius;
-			this.y -= diffToTop;
+			this.y -= diffToTop * 2;
 		}
 		this.bottomScreenBehavior();
 		
