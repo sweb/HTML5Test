@@ -1,11 +1,12 @@
 //-----------------------------------------------------------------------------
 var AbstractBall = GameObject.extend({
-	init: function(x, y, ax, ay) {
+	init: function(x, y, ax, ay, ballID) {
 		this._super(x, y);
 		this.ax = ax;
 		this.ay = ay;
 		this.radius = GAME_BALL_RADIUS;
 		this.correctionAlreadyHappened = false;
+		this.ballID = ballID;
 	},
 	drawHelper: function(context, isShowing) {
 		if (isShowing && this.alive) {

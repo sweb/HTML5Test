@@ -1,6 +1,6 @@
 var GameBall = AbstractBall.extend({
-	init: function(x, y, ax, ay) {
-		this._super(x, y, ax, ay);
+	init: function(x, y, ax, ay, ballID) {
+		this._super(x, y, ax, ay, ballID);
 		this.color = "white";
 	},
 	bottomScreenBehavior: function() {
@@ -42,6 +42,6 @@ var GameBall = AbstractBall.extend({
 		}
 	},
 	startBombMode: function() {
-		ball = new BombBall(this.x, this.y, this.ax, this.ay);
+		ball[this.ballID] = new BombBall(this.x, this.y, this.ax, this.ay, this.ballID);
 	}
 });

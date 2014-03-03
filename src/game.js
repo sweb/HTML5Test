@@ -56,9 +56,11 @@ function update() {
 	menu.draw(context);
 
 	bat.draw(context);
-	ball.draw(context);
-	ball.detectBatCollision(bat);
-	ball.detectBlockCollision(blocks);
+	for (var i = 0; i < 1; i++) {
+  		ball[i].draw(context);
+  		ball[i].detectBatCollision(bat);
+		ball[i].detectBlockCollision(blocks);
+	}
 	for (var i = 0; i < blocks.length; i++) {
 		blocks[i].draw(context);
 	}
@@ -86,7 +88,8 @@ function reset() {
 	blockCounter = 13 * 8;
 	menu = new Menu();
 	bat = new PlayerBat(GAME_WIDTH / 2 - 60, GAME_HEIGHT - 10);
-	ball = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0);
+	ball = new Array(99);
+	ball[0] = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0, 0);
 	blocks = new Array;
 	for (var i = 0; i < 13; i++) {
 		for (var j = 0; j < 8; j++) {
@@ -105,7 +108,9 @@ function doMouseMove(e) {
 
 function doClick(e) {
 	if (!isRunning) {
-		ball.release();
+		for (var i = 0; i < 1; i++) {
+			ball[i].release();
+		}
 		isRunning = true;
 	}
 }
