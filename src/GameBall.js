@@ -1,18 +1,22 @@
 var GameBall = AbstractBall.extend({
-	init: function(x, y, ax, ay) {
-		this._super(x, y, ax, ay);
+	init: function(x, y, ax, ay, ballID) {
+		this._super(x, y, ax, ay, ballID);
 		this.color = "white";
 	},
 	bottomScreenBehavior: function() {
 		if ( this.y >= ( GAME_HEIGHT - this.radius ) ) {
-			this.reset();
-			isRunning = false;
-			menu.loseLife();
+			purgeBalls(this.ballID);
+			numberOfBalls--;
 		}
 	},
 	individualCollisionLogic: function() {
 		if (Math.random() < BOMB_MODE_CHANCE) {
 			this.startBombMode();
+		}
+
+		if (Math.random() < SPLIT_BALL_CHANCE) {
+			ball[numberOfBalls] = new GameBall(this.x, this.y, this.ax, this.ay, numberOfBalls);
+			numberOfBalls++;
 		}
 	},
 	detectBatCollision: function(bat) {
@@ -42,6 +46,6 @@ var GameBall = AbstractBall.extend({
 		}
 	},
 	startBombMode: function() {
-		ball = new BombBall(this.x, this.y, this.ax, this.ay);
+		ball[this.ballID] = new BombBall(this.x, this.y, this.ax, this.ay, this.ballID);
 	}
 });

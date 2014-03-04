@@ -29,6 +29,7 @@ var menu ;
 var bat ;
 var ball ;
 var blocks;
+var numberOfBalls = 0;
 reset();
 
 //-----------------------------------------------------------------------------
@@ -53,12 +54,22 @@ function update() {
 		}
 	}
 
+	if (numberOfBalls == 0) {
+		menu.loseLife();
+		isRunning = false;
+		ball = new Array(99);
+		ball[0] = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0, 0);
+		numberOfBalls = 1;
+	}
+
 	menu.draw(context);
 
 	bat.draw(context);
-	ball.draw(context);
-	ball.detectBatCollision(bat);
-	ball.detectBlockCollision(blocks);
+	for (var i = 0; i < numberOfBalls; i++) {
+  		ball[i].draw(context);
+  		ball[i].detectBatCollision(bat);
+		ball[i].detectBlockCollision(blocks);
+	}
 	for (var i = 0; i < blocks.length; i++) {
 		blocks[i].draw(context);
 	}
@@ -74,8 +85,10 @@ function doKeyUp(e) {
 }
 
 function stop() {
-	ball.reset;
-	ball.alive = false;
+	for (var i = 0; i < numberOfBalls; i++) {
+  		ball[i].reset();
+  		ball[i].alive = false;
+	}
 	bat.alive = false;
 	isGameOver = true;
 }
@@ -86,7 +99,9 @@ function reset() {
 	blockCounter = 13 * 8;
 	menu = new Menu();
 	bat = new PlayerBat(GAME_WIDTH / 2 - 60, GAME_HEIGHT - 10);
-	ball = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0);
+	ball = new Array(99);
+	ball[0] = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0, 0);
+	numberOfBalls = 1;
 	blocks = new Array;
 	for (var i = 0; i < 13; i++) {
 		for (var j = 0; j < 8; j++) {
@@ -105,7 +120,16 @@ function doMouseMove(e) {
 
 function doClick(e) {
 	if (!isRunning) {
-		ball.release();
+		for (var i = 0; i < 1; i++) {
+			ball[i].release();
+		}
 		isRunning = true;
+	}
+}
+
+function purgeBalls(pos) {
+	for (var i = pos; i < numberOfBalls - 1; i++) {
+		ball[i] = ball[i + 1];
+		ball[i].ballID--;
 	}
 }

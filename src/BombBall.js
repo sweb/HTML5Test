@@ -1,6 +1,6 @@
 var BombBall = AbstractBall.extend({
-	init: function(x, y, ax, ay) {
-		this._super(x, y,  ax, ay);
+	init: function(x, y, ax, ay, ballID) {
+		this._super(x, y,  ax, ay, ballID);
 		this.color = "red";
 		this.bombTimer = BOMB_MODE_TIME;
 	},
@@ -11,9 +11,7 @@ var BombBall = AbstractBall.extend({
 	},
 	detectBatCollision: function(bat) {
 		if (this.detectObjectCollision(bat) ) {
-			this.reset();
-			isRunning = false;
-			menu.loseLife();
+			numberOfBalls=0;
 		}
 	},
 	draw: function(context) {
@@ -26,11 +24,11 @@ var BombBall = AbstractBall.extend({
 			this.move();
 			this.drawHelper(context, this.displayBall);
 			if (this.bombTimer == 0) {
-				ball = new GameBall(this.x, this.y, this.ax, this.ay);
+				ball[this.ballID] = new GameBall(this.x, this.y, this.ax, this.ay, this.ballID);
 			}
 		}
 	},
 	reset: function() {
-		ball = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0);
+		ball[this.ballID] = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0, this.ballID);
 	}
 });
