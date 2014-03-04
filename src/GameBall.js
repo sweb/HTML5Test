@@ -14,6 +14,11 @@ var GameBall = AbstractBall.extend({
 		if (Math.random() < BOMB_MODE_CHANCE) {
 			this.startBombMode();
 		}
+
+		if (Math.random() < SPLIT_BALL_CHANCE) {
+			ball[numberOfBalls] = new GameBall(this.x, this.y, this.ax, this.ay, numberOfBalls);
+			numberOfBalls++;
+		}
 	},
 	detectBatCollision: function(bat) {
 		if (this.detectObjectCollision(bat) ) {

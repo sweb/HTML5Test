@@ -29,6 +29,7 @@ var menu ;
 var bat ;
 var ball ;
 var blocks;
+var numberOfBalls = 0;
 reset();
 
 //-----------------------------------------------------------------------------
@@ -56,7 +57,7 @@ function update() {
 	menu.draw(context);
 
 	bat.draw(context);
-	for (var i = 0; i < 1; i++) {
+	for (var i = 0; i < numberOfBalls; i++) {
   		ball[i].draw(context);
   		ball[i].detectBatCollision(bat);
 		ball[i].detectBlockCollision(blocks);
@@ -90,6 +91,7 @@ function reset() {
 	bat = new PlayerBat(GAME_WIDTH / 2 - 60, GAME_HEIGHT - 10);
 	ball = new Array(99);
 	ball[0] = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0, 0);
+	numberOfBalls = 1;
 	blocks = new Array;
 	for (var i = 0; i < 13; i++) {
 		for (var j = 0; j < 8; j++) {
