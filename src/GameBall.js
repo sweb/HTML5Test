@@ -5,9 +5,8 @@ var GameBall = AbstractBall.extend({
 	},
 	bottomScreenBehavior: function() {
 		if ( this.y >= ( GAME_HEIGHT - this.radius ) ) {
-			this.reset();
-			isRunning = false;
-			menu.loseLife();
+			purgeBalls(this.ballID);
+			numberOfBalls--;
 		}
 	},
 	individualCollisionLogic: function() {

@@ -54,6 +54,14 @@ function update() {
 		}
 	}
 
+	if (numberOfBalls == 0) {
+		menu.loseLife();
+		isRunning = false;
+		ball = new Array(99);
+		ball[0] = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0, 0);
+		numberOfBalls = 1;
+	}
+
 	menu.draw(context);
 
 	bat.draw(context);
@@ -77,8 +85,10 @@ function doKeyUp(e) {
 }
 
 function stop() {
-	ball.reset;
-	ball.alive = false;
+	for (var i = 0; i < numberOfBalls; i++) {
+  		ball[i].reset();
+  		ball[i].alive = false;
+	}
 	bat.alive = false;
 	isGameOver = true;
 }
@@ -114,5 +124,12 @@ function doClick(e) {
 			ball[i].release();
 		}
 		isRunning = true;
+	}
+}
+
+function purgeBalls(pos) {
+	for (var i = pos; i < numberOfBalls - 1; i++) {
+		ball[i] = ball[i + 1];
+		ball[i].ballID--;
 	}
 }

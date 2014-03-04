@@ -11,9 +11,7 @@ var BombBall = AbstractBall.extend({
 	},
 	detectBatCollision: function(bat) {
 		if (this.detectObjectCollision(bat) ) {
-			this.reset();
-			isRunning = false;
-			menu.loseLife();
+			numberOfBalls=0;
 		}
 	},
 	draw: function(context) {
