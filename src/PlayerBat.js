@@ -12,7 +12,10 @@ var PlayerBat = Rectangle.extend({
 		this.pastPositions.push(this.x);
 	},
 	draw: function(context) {
-		this._super(context);
+		//this._super(context);
+		if (this.alive) {
+			context.drawImage(pictureOfBat, this.x, this.y);
+		}
 		this.pastPositions[0] = this.pastPositions[1]; 
 		this.pastPositions[1] = this.pastPositions[2];
 		this.pastPositions[2] = this.x;

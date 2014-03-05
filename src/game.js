@@ -7,6 +7,9 @@ canvas.width = GAME_WIDTH + MENU_WIDTH;
 canvas.height = GAME_HEIGHT;
 canvas.style.cursor = "none";
 
+var pictureOfBat = new Image();
+pictureOfBat.src = "img/player_bat.png";
+
 var keyState = {};
 
 window.addEventListener("keydown", doKeyDown, true);
