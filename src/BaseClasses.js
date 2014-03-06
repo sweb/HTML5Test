@@ -24,13 +24,14 @@ var Rectangle = GameObject.extend({
 	init: function(x, y) {
 		this._super(x, y);
 	},
-	draw: function(context) {
+	draw: function(context, img) {
 		if (this.alive) {
-			context.strokeStyle = "black";
-			context.lineWidth = 1;
-			context.strokeRect(this.x, this.y, this.w, this.h);
-			context.fillStyle = this.color;
-			context.fillRect(this.x, this.y, this.w, this.h);
+			// context.strokeStyle = "black";
+			// context.lineWidth = 1;
+			// context.strokeRect(this.x, this.y, this.w, this.h);
+			// context.fillStyle = this.color;
+			// context.fillRect(this.x, this.y, this.w, this.h);
+			context.drawImage(img, this.x, this.y);
 		}
 	}
 });	

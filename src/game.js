@@ -8,7 +8,11 @@ canvas.height = GAME_HEIGHT;
 canvas.style.cursor = "none";
 
 var pictureOfBat = new Image();
+var pictureOfBlock = new Image();
+var pictureOfGameBall = new Image();
 pictureOfBat.src = "img/player_bat.png";
+pictureOfBlock.src = "img/normal_block.png";
+pictureOfGameBall.src = "img/game_ball.png";
 
 var keyState = {};
 
