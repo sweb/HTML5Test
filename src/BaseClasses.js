@@ -26,11 +26,6 @@ var Rectangle = GameObject.extend({
 	},
 	draw: function(context, img) {
 		if (this.alive) {
-			// context.strokeStyle = "black";
-			// context.lineWidth = 1;
-			// context.strokeRect(this.x, this.y, this.w, this.h);
-			// context.fillStyle = this.color;
-			// context.fillRect(this.x, this.y, this.w, this.h);
 			context.drawImage(img, this.x, this.y);
 		}
 	}
