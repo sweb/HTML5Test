@@ -4,5 +4,8 @@ var Block = Rectangle.extend({
 		this.w = BLOCK_WIDTH;
 		this.h = BLOCK_HEIGHT;
 		this.color = "#FFF";
+	},
+	draw: function(context) {
+		this._super(context, pictureOfBlock);
 	}
 });

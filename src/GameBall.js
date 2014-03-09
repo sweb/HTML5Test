@@ -42,7 +42,7 @@ var GameBall = AbstractBall.extend({
 	draw: function(context) {
 		if (this.alive) {
 			this.move();
-			this.drawHelper(context, true);
+			context.drawImage(pictureOfGameBall, this.x - this.radius, this.y - this.radius);
 		}
 	},
 	startBombMode: function() {

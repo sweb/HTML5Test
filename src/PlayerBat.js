@@ -3,7 +3,6 @@ var PlayerBat = Rectangle.extend({
 		this._super(x, y);
 		this.w = BAT_WIDTH;
 		this.h = BAT_HEIGHT;
-		this.color = "#000";
 		this.isMovingLeft = false;
 		this.isMovingRight = false;
 		this.pastPositions = new Array();
@@ -12,7 +11,8 @@ var PlayerBat = Rectangle.extend({
 		this.pastPositions.push(this.x);
 	},
 	draw: function(context) {
-		this._super(context);
+		this._super(context, pictureOfBat);
+
 		this.pastPositions[0] = this.pastPositions[1]; 
 		this.pastPositions[1] = this.pastPositions[2];
 		this.pastPositions[2] = this.x;

@@ -7,6 +7,15 @@ canvas.width = GAME_WIDTH + MENU_WIDTH;
 canvas.height = GAME_HEIGHT;
 canvas.style.cursor = "none";
 
+var pictureOfBat = new Image();
+var pictureOfBlock = new Image();
+var pictureOfGameBall = new Image();
+var background = new Image();
+pictureOfBat.src = "img/player_bat.png";
+pictureOfBlock.src = "img/normal_block.png";
+pictureOfGameBall.src = "img/game_ball.png";
+background.src = "img/background.png";
+
 var keyState = {};
 
 window.addEventListener("keydown", doKeyDown, true);
@@ -17,6 +26,11 @@ window.addEventListener("click", doClick, false);
 var context = canvas.getContext("2d");
 
 context.fillStyle = "black";
+
+context.shadowOffsetX = 4;
+context.shadowOffsetY = 4;
+context.shadowBlur = 5;
+context.shadowColor = "black";
 
 context.font = GAME_FONTS;
 
@@ -37,6 +51,7 @@ function update() {
 
 	context.fillStyle = "#AAA";
 	context.fillRect(0, 0, canvas.width, canvas.height);
+	context.drawImage(background, 0, 0);
 	var tryToMoveLeft = keyState[37];
 	var tryToMoveRight = keyState[39];
 	var isTryingToReset = keyState[82];
@@ -98,7 +113,7 @@ function reset() {
 	isGameOver = false;
 	blockCounter = 13 * 8;
 	menu = new Menu();
-	bat = new PlayerBat(GAME_WIDTH / 2 - 60, GAME_HEIGHT - 10);
+	bat = new PlayerBat(GAME_WIDTH / 2 - 60, GAME_HEIGHT - 20);
 	ball = new Array(99);
 	ball[0] = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0, 0);
 	numberOfBalls = 1;
