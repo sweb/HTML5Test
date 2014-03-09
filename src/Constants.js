@@ -1,14 +1,19 @@
 /**
- * System values
+ * System values used in the game
  */
 
 var GAME_WIDTH = 600;
 var GAME_HEIGHT = 400;
+
+var MENU_WIDTH = 150;
+
 var TIME_PER_FRAME = 16;
 var GAME_FONTS = "bold 20px sans-serif";
 
 var BAT_WIDTH = 60;
 var BAT_HEIGHT = 10;
+
+var ACCELERATION_BY_BAT = 1;
 
 var BLOCK_WIDTH = 40;
 var BLOCK_HEIGHT = 15;
@@ -19,4 +24,13 @@ var HORIZONTAL_SPACE_BETWEEN_BLOCKS = 5;
 var GAME_BALL_RADIUS = 7;
 
 var BALL_START_POSITION_X = GAME_WIDTH / 2;
-var BALL_START_POSITION_Y = GAME_HEIGHT / 2 + 100;
+var BALL_START_POSITION_Y = GAME_HEIGHT / 2 + 150;
+var INIT_BALL_AX = 2;
+var INIT_BALL_AY = -4;
+
+var BOMB_MODE_CHANCE = 0.05;
+var BOMB_MODE_TIME = 400;
+var END_OF_BOMB_WARN_TIME = 40;
+var FLICKER_REPETITION = 12;
+
+var SPLIT_BALL_CHANCE = 0.05;
