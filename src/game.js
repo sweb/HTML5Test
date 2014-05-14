@@ -7,10 +7,15 @@ canvas.width = GAME_WIDTH + MENU_WIDTH;
 canvas.height = GAME_HEIGHT;
 canvas.style.cursor = "none";
 
+var allImagesLoaded = [false, false];
+var isRedrawNecessary = true;
 var pictureOfBat = new Image();
 var pictureOfBlock = new Image();
 var pictureOfGameBall = new Image();
 var background = new Image();
+background.onload = function() {
+  allImagesLoaded[0] = true;
+}
 pictureOfBat.src = "img/player_bat.png";
 pictureOfBlock.src = "img/normal_block.png";
 pictureOfGameBall.src = "img/game_ball.png";
@@ -34,6 +39,7 @@ context.shadowColor = "black";
 
 context.font = GAME_FONTS;
 
+
 var gameLoop = setInterval(update, TIME_PER_FRAME);
 
 var isRunning;
@@ -44,14 +50,25 @@ var bat ;
 var ball ;
 var blocks;
 var numberOfBalls = 0;
-reset();
+//reset();
+pictureOfBlock.onload = function() {
+  allImagesLoaded[1] = true;
+}
+
+function areAllImagesLoaded() {
+  var ret = true;
+  for (var i = 0; i < 2; i++) {
+    ret = ret && allImagesLoaded[i];
+  }
+  return ret;
+}
 
 //-----------------------------------------------------------------------------
 function update() {
 
-	context.fillStyle = "#AAA";
-	context.fillRect(0, 0, canvas.width, canvas.height);
-	context.drawImage(background, 0, 0);
+	//context.fillStyle = "#AAA";
+	//context.fillRect(0, 0, canvas.width, canvas.height);
+	//
 	var tryToMoveLeft = keyState[37];
 	var tryToMoveRight = keyState[39];
 	var isTryingToReset = keyState[82];
@@ -59,6 +76,14 @@ function update() {
 	if (!isGameOver && blockCounter == 0) {
 		stop();
 	}
+  if (isRedrawNecessary && areAllImagesLoaded()) {
+    reset();
+    context.drawImage(background, 0, 0);
+    for (var i = 0; i < blocks.length; i++) {
+      blocks[i].draw(context);
+    }
+    isRedrawNecessary = false;
+  }
 	
 	if (isGameOver) {
 		context.font = "bold 24px sans-serif";
@@ -79,15 +104,12 @@ function update() {
 
 	menu.draw(context);
 
-	bat.draw(context);
 	for (var i = 0; i < numberOfBalls; i++) {
-  		ball[i].draw(context);
   		ball[i].detectBatCollision(bat);
 		ball[i].detectBlockCollision(blocks);
+  		ball[i].draw(context);
 	}
-	for (var i = 0; i < blocks.length; i++) {
-		blocks[i].draw(context);
-	}
+	bat.draw(context);
 	batMotion = false;
 }
 //-----------------------------------------------------------------------------

@@ -5,6 +5,8 @@ var GameBall = AbstractBall.extend({
 	},
 	bottomScreenBehavior: function() {
 		if ( this.y >= ( GAME_HEIGHT - this.radius ) ) {
+        this.cleanUpGraphics(context);
+        this.alive = false;
 			purgeBalls(this.ballID);
 			numberOfBalls--;
 		}
@@ -42,7 +44,19 @@ var GameBall = AbstractBall.extend({
 	draw: function(context) {
 		if (this.alive) {
 			this.move();
+      context.shadowOffsetX = 0;
+      context.shadowOffsetY = 0;
+      context.shadowBlur = 0;
+      context.drawImage(background, this.oldX - this.radius, 
+          this.oldY - this.radius, 2 * this.radius, 2 * this.radius, 
+          this.oldX - this.radius, this.oldY - this.radius, 
+          2 * this.radius, 2 * this.radius);
 			context.drawImage(pictureOfGameBall, this.x - this.radius, this.y - this.radius);
+      context.shadowOffsetX = 4;
+      context.shadowOffsetY = 4;
+      context.shadowBlur = 5;
+      this.oldX = this.x;
+      this.oldY = this.y;
 		}
 	},
 	startBombMode: function() {

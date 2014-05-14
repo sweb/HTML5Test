@@ -11,6 +11,7 @@ var BombBall = AbstractBall.extend({
 	},
 	detectBatCollision: function(bat) {
 		if (this.detectObjectCollision(bat) ) {
+        this.cleanUpGraphics(context);
 			numberOfBalls=0;
 		}
 	},
@@ -24,11 +25,14 @@ var BombBall = AbstractBall.extend({
 			this.move();
 			this.drawHelper(context, this.displayBall);
 			if (this.bombTimer == 0) {
+        this.cleanUpGraphics(context);
+        this.alive = false;
 				ball[this.ballID] = new GameBall(this.x, this.y, this.ax, this.ay, this.ballID);
 			}
 		}
 	},
 	reset: function() {
+        this.cleanUpGraphics(context);
 		ball[this.ballID] = new GameBall(BALL_START_POSITION_X, BALL_START_POSITION_Y, 0, 0, this.ballID);
 	}
 });

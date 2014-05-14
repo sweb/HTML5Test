@@ -6,6 +6,6 @@ var Block = Rectangle.extend({
 		this.color = "#FFF";
 	},
 	draw: function(context) {
-		this._super(context, pictureOfBlock);
+		this._super(context, pictureOfBlock, background, this.x, this.y);
 	}
 });

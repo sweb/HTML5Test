@@ -4,20 +4,42 @@ var AbstractBall = GameObject.extend({
 		this._super(x, y);
 		this.ax = ax;
 		this.ay = ay;
+    this.oldX = x;
+    this.oldY = y;
 		this.radius = GAME_BALL_RADIUS;
 		this.correctionAlreadyHappened = false;
 		this.ballID = ballID;
 	},
 	drawHelper: function(context, isShowing) {
 		if (isShowing && this.alive) {
-			context.strokeStyle = "black";
+      this.cleanUpGraphics(context);
+      context.shadowOffsetX = 0;
+      context.shadowOffsetY = 0;
+      context.shadowBlur = 0;
+			//context.strokeStyle = "black";
 			context.fillStyle = this.color;
 			context.beginPath();
 			context.arc( this.x, this.y, this.radius, 0, 2*Math.PI);
-			context.stroke();
 			context.fill();
+      context.shadowOffsetX = 4;
+      context.shadowOffsetY = 4;
+      context.shadowBlur = 5;
+      this.oldX = this.x;
+      this.oldY = this.y;
 		}
 	},
+  cleanUpGraphics: function(context) {
+      context.shadowOffsetX = 0;
+      context.shadowOffsetY = 0;
+      context.shadowBlur = 0;
+      context.drawImage(background, this.oldX - this.radius, 
+          this.oldY - this.radius, 2 * this.radius, 2 * this.radius, 
+          this.oldX - this.radius, this.oldY - this.radius, 
+          2 * this.radius, 2 * this.radius);
+      context.shadowOffsetX = 4;
+      context.shadowOffsetY = 4;
+      context.shadowBlur = 5;
+  },
 	detectObjectCollision: function(obj) {
 		var leftBorderOfBall = (this.x + this.radius);
 		var rightBorderOfBall = (this.x - this.radius);
@@ -55,6 +77,7 @@ var AbstractBall = GameObject.extend({
 			if (this.detectObjectCollision(blocks[i])) {
 				blocks[i].alive = false;
 				blockCounter--;
+        blocks[i].draw(context);
 				menu.increaseScore();
 				this.individualCollisionLogic();
 			}
@@ -81,6 +104,7 @@ var AbstractBall = GameObject.extend({
 			this.y -= diffToTop * 2;
 		}
 		this.bottomScreenBehavior();
+
 		
 		this.x += this.ax;
 		this.y += this.ay;
